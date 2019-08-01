@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="net.bestmember.isjung.rentalfree.dao.RequestHistoryMapper">
+    <insert id="insertRequestHistory" parameterType="requestHistoryDto">
+    	INSERT INTO t_request_history(
+			hist_name
+			, hist_content
+			, req_seq
+		) VALUES (
+			#{hist_name}
+			, #{hist_content}
+			, #{req_seq}
+		)
+    </insert>
+    
+    <update id="updateRequestHistory" parameterType="requestHistoryDto">
+    	UPDATE t_request_history
+    	<set>
+    		<if test="hist_name != null" >hist_name = #{hist_name}</if>
+			<if test="hist_content != null" >, hist_content = #{hist_content}</if>
+			<if test="req_seq != null" >, req_seq = #{req_seq}</if>
+		</set>
+		WHERE 
+			hist_seq = #{hist_seq}
+    </update>
+    
+    <delete id="deleteRequestHistory" parameterType="long">
+        DELETE FROM t_request_history WHERE hist_seq = #{hist_seq}
+    </delete>
+    
+    <select id="selectRequestHistory" parameterType="long" resultType="requestHistoryDto">
+        SELECT * FROM t_request_history WHERE hist_seq = #{hist_seq}
+    </select>
+    
+    <select id="selectRequestHistoryList" parameterType="long" resultType="requestHistoryDto">
+        SELECT * FROM t_request_history
+        WHERE req_seq = #{req_seq}
+    </select>
+</mapper>

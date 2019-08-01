@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="net.bestmember.isjung.rentalfree.dao.RequestMapper">
+    <insert id="insertRequest" parameterType="requestDto">
+    	INSERT INTO t_request(
+			req_name
+			, req_tel
+			, req_content
+		) VALUES (
+			#{req_name}
+			, #{req_tel}
+			, #{req_content}
+		)
+    </insert>
+    
+    <update id="updateRequest" parameterType="requestDto">
+    	UPDATE t_request
+    	<set>
+    		<if test="req_name != null" >req_name = #{req_name}</if>
+			<if test="req_tel != null" >, req_tel = #{req_tel}</if>
+			<if test="req_content != null" >, req_content = #{req_content}</if>
+			<if test="proc_yn != null" >, proc_yn = #{proc_yn}</if>
+		</set>
+		WHERE 
+			req_seq = #{req_seq}
+    </update>
+    
+    <delete id="deleteRequest" parameterType="long">
+        DELETE FROM t_request WHERE req_seq = #{req_seq}
+    </delete>
+    
+    <select id="selectRequest" parameterType="long" resultType="requestDto">
+        SELECT
+			*    
+        FROM t_request WHERE req_seq = #{req_seq}
+    </select>
+    
+    <select id="selectRequestList" parameterType="java.util.HashMap" resultType="requestDto">
+        SELECT * FROM t_request
+        <where>
+        	<if test="!@org.springframework.util.StringUtils@isEmpty(srch_req_name)">
+				AND req_name LIKE CONCAT('%', #{srch_req_name}, '%')
+        	</if>
+        	<if test="!@org.springframework.util.StringUtils@isEmpty(srch_req_tel)">
+				AND req_tel LIKE CONCAT('%', #{srch_req_tel}, '%')
+        	</if>
+        </where>
+        ORDER BY req_seq desc
+
+    </select>
+</mapper>

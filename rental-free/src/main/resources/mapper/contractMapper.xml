@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="net.bestmember.isjung.rentalfree.dao.ContractMapper">
+    <insert id="insertContract" parameterType="ContractDto">
+    	INSERT INTO t_contract(
+			contrt_type
+			, contrt_name
+			, contrt_tel
+			, prod_seq
+		) VALUES (
+			#{contrt_type}
+			, #{contrt_name}
+			, #{contrt_tel}
+			, #{prod_seq}
+		)
+    </insert>
+    
+    <update id="updateContract" parameterType="ContractDto">
+    	UPDATE t_contract
+    	<set>
+    		<if test="contrt_type != null" >contrt_type = #{contrt_type}</if>
+			<if test="contrt_name != null" >, contrt_name = #{contrt_name}</if>
+			<if test="contrt_tel != null" >, contrt_tel = #{contrt_tel}</if>
+			<if test="prod_seq != null" >, prod_seq = #{prod_seq}</if>
+		</set>
+		WHERE 
+			cntrt_seq = #{cntrt_seq}
+    </update>
+    
+    <delete id="deleteContract" parameterType="long">
+        DELETE FROM t_contract WHERE prod_seq = #{prod_seq}
+    </delete>
+    
+    <select id="selectContract" parameterType="long" resultType="contractDto">
+        SELECT * FROM t_contract WHERE cntrt_seq = #{cntrt_seq}
+    </select>
+    
+    <select id="selectContractList" parameterType="long" resultType="ContractDto">
+        SELECT * FROM t_contract
+        WHERE prod_seq = #{prod_seq}
+    </select>
+</mapper>

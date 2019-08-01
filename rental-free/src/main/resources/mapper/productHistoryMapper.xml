@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="net.bestmember.isjung.rentalfree.dao.ProductHistoryMapper">
+    <insert id="insertProductHistory" parameterType="productHistoryDto">
+		INSERT INTO t_product_history(
+			hist_name
+			, hist_content
+			, prod_seq
+		) VALUES (
+			#{hist_name}
+			, #{hist_content}
+			, #{prod_seq}
+		)
+    </insert>
+    
+    <update id="updateProductHistory" parameterType="productHistoryDto">
+    	UPDATE t_product_history
+    		<set>
+    			<if test="hist_name != null" >hist_name = #{hist_name}</if>
+			<if test="hist_content != null" >, hist_content = #{hist_content}</if>
+			<if test="prod_seq != null" >, prod_seq = #{prod_seq}</if>
+		</set>
+		WHERE 
+			prod_hist_seq = #{prod_hist_seq}
+    </update>
+    
+    <delete id="deleteProductHistory" parameterType="long">
+        DELETE FROM t_product_history WHERE prod_seq = #{prod_seq}
+    </delete>
+    
+    <select id="selectProductHistory" parameterType="long" resultType="productHistoryDto">
+        SELECT * FROM t_product_history WHERE prod_hist_seq = #{prod_hist_seq}
+    </select>
+    
+    <select id="selectProductHistoryList" parameterType="long" resultType="productHistoryDto">
+        SELECT prod_hist_seq, hist_name, hist_date, hist_content, prod_seq FROM t_product_history
+        WHERE prod_seq = #{prod_seq}
+    </select>
+</mapper>
