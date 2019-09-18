@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class LottoApplication {
 
 	public static void main(String[] args) {
+		Powerball pb = new Powerball();
+		pb.main(args);
 		SpringApplication.run(LottoApplication.class, args);
 	}
 
