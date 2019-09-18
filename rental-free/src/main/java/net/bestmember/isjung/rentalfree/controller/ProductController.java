@@ -129,7 +129,7 @@ public class ProductController {
         return this.list(model, null);
     }
     
-    @RequestMapping(value= {"/service/list", "/service"}, method= {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value= {"", "/", "/service/list", "/service"}, method= {RequestMethod.GET, RequestMethod.POST})
     public String serviceList(Model model, @RequestParam HashMap<String, Object> params) {
     	params.put("srch_service_yn", "Y");
     	model.addAttribute("result", productService.selectList(params));
