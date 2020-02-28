@@ -28,9 +28,19 @@ import net.bestmember.isjay.common.util.StringUtils;
 import net.bestmember.isjay.common.vo.CodeResult;
 
 public class SinsangDataReader {
-	static BasicCookieStore cookieStore = new BasicCookieStore();
 	
+	static final int DEFAULT_MEN_CATE_ID = 1;
+	static final int DEFAULT_WOMEN_CATE_ID = 2;
+	static final int DEFAULT_MEN_CATE_SIZE = 36;
+	static final int DEFAULT_WOMEN_CATE_SIZE = 200;
+			
+	static BasicCookieStore cookieStore = new BasicCookieStore();
+			
 	public static List<String> getCategoryURLList(){
+		return getCategoryURLList("", 0);
+	}
+	
+	public static List<String> getCategoryURLList(String gender, int size){
 		/**
 		 * 1. 남성 티/탑 : 신상배송 / 댄디 / 대한민국 / 5000~10000
 		 * https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size=36&disableAds=1&enableSDelivery=1&catId=12&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow=5000&priceHigh=10000
@@ -43,16 +53,27 @@ public class SinsangDataReader {
 		 * 5. 여성의류 전체 : 신상초이스 / 전체 / 대한민국 / 5000~10000
 		 * https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size=36&disableAds=1&storeId=9164&catGenderId=1&catItemId=1&manufacturingCountryId=1&priceLow=5000&priceHigh=10000
 		**/
+		int catGenderId = "men".equals(gender) ? DEFAULT_MEN_CATE_ID : "women".equals(gender) ? DEFAULT_WOMEN_CATE_ID : 0;
 		List<String> categoryList = new ArrayList<String>();
-		categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size=200&disableAds=1&storeId=9164&catGenderId=1&catItemId=1&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
-		categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size=36&disableAds=1&enableSDelivery=1&catId=12&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
-		categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size=36&disableAds=1&enableSDelivery=1&catId=13&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
-		categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size=36&disableAds=1&enableSDelivery=1&catId=16&catGenderId=2&catItemId=1&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
-		categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size=36&disableAds=1&enableSDelivery=1&catId=17&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
-		
+		if(DEFAULT_MEN_CATE_ID == catGenderId) {
+			if(size == 0) size = DEFAULT_MEN_CATE_SIZE;
+			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ size +"&disableAds=1&enableSDelivery=1&catId=12&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
+			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ size +"&disableAds=1&enableSDelivery=1&catId=13&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
+			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ size +"&disableAds=1&enableSDelivery=1&catId=16&catGenderId=2&catItemId=1&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
+			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ size +"&disableAds=1&enableSDelivery=1&catId=17&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
+		}else if(DEFAULT_WOMEN_CATE_ID == catGenderId) {
+			if(size == 0) size = DEFAULT_WOMEN_CATE_SIZE;
+			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ size +"&disableAds=1&storeId=9164&catGenderId=1&catItemId=1&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
+		}else {
+			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ DEFAULT_MEN_CATE_SIZE +"&disableAds=1&enableSDelivery=1&catId=12&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
+			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ DEFAULT_MEN_CATE_SIZE +"&disableAds=1&enableSDelivery=1&catId=13&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
+			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ DEFAULT_MEN_CATE_SIZE +"&disableAds=1&enableSDelivery=1&catId=16&catGenderId=2&catItemId=1&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
+			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ DEFAULT_MEN_CATE_SIZE +"&disableAds=1&enableSDelivery=1&catId=17&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
+			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ DEFAULT_WOMEN_CATE_SIZE +"&disableAds=1&storeId=9164&catGenderId=1&catItemId=1&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
+		}
 		return categoryList; 
-		
 	}
+	
 	public static String getSinsangList(String url, Map<String, String> header) {
 		CodeResult<String> result = HttpClient.httpGet(url, header);
 		System.out.println(result.getData().toString());
@@ -172,8 +193,6 @@ public class SinsangDataReader {
         System.out.println("\n\nIterating over Rows and Columns using for-each loop\n");
         for (Row row: sheet) {
             for(Cell cell: row) {
-                String cellValue = dataFormatter.formatCellValue(cell);
-                System.out.print(cellValue + "\t");
                 imageDownload(cell);
             }
             System.out.println();
@@ -197,25 +216,20 @@ public class SinsangDataReader {
         workbook.close();
 	}
 	
+	static int gid = 0;
 	static String bigCateName = "";
 	static String detailCateName = "";
 	
     private static void imageDownload(Cell cell) {
-    	// 8 : img1 / 26 : img_url1
-    	System.out.println("cell.getColumnIndex()  : " + cell.getColumnIndex() );
-    	System.out.println("cell.getRowIndex()  : " + cell.getRowIndex() );
-    	
-
-    	
-    	if(cell.getColumnIndex() == 2) 
+//    	System.out.println("cell.getColumnIndex()  : " + cell.getColumnIndex() );
+//    	System.out.println("cell.getRowIndex()  : " + cell.getRowIndex() );
+    	if(cell.getColumnIndex() == 0 && cell.getRowIndex() > 0)
+    		gid = (int) Math.round(cell.getNumericCellValue());
+    	if(cell.getColumnIndex() == 2 && cell.getRowIndex() > 0) 
     		bigCateName = cell.getStringCellValue().replace("/", "&");
     	if(cell.getColumnIndex() == 3) 
     		detailCateName = cell.getStringCellValue().replace("/", "&");
-    	if(cell.getColumnIndex() > 7 && cell.getRowIndex() > 0) {
-    		
-    		
-    		
-    		System.out.println(cell.getStringCellValue());
+    	if(cell.getColumnIndex() > 13 && cell.getRowIndex() > 0) {
     		String imgUrl = cell.getStringCellValue();
     		System.out.println("imgUrl  : " + imgUrl);
     		if(StringUtils.isNotEmpty(imgUrl)) {
@@ -224,7 +238,7 @@ public class SinsangDataReader {
 					url = new URL(imgUrl);
 					String fileName = imgUrl.substring( imgUrl.lastIndexOf('/')+1, imgUrl.length() ); // 이미지 파일명 추출
 					String ext = imgUrl.substring( imgUrl.lastIndexOf('.')+1, imgUrl.length() ).split("&")[0];  // 이미지 확장자 추출
-					fileName = fileName.substring(0, fileName.indexOf("."));
+					fileName = gid + "-" + fileName.substring(0, fileName.indexOf("."));
 					BufferedImage img = ImageIO.read(url);
 					String targetDir = "/Users/sujin/Downloads/sinsang_20200228/"+bigCateName+"/"+detailCateName;
 					File checkDir = new File(targetDir);

@@ -1,11 +1,15 @@
 package net.bestmember.isjay.sinsang.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.tomcat.util.json.JSONParser;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.JsonElement;
@@ -27,15 +31,16 @@ public class SinsangController {
     @Autowired
     private ProductImageMapper productImageMapper;
 	
-    @RequestMapping("/collect")
-    public List<ProductDTO> collect() throws Exception {
-    	
+    @GetMapping({"/collect", "/collect/{gender}/{size}"})
+    public String collect(@PathVariable(required = false) String gender, @PathVariable(required = false) Integer size) throws Exception {
+    	int productCnt = 0;
+    	int productImageCnt = 0;
     	ProductDTO productDTO = new ProductDTO();
     	ProductImageDTO productImageDTO = new ProductImageDTO();
 
     	SinsangDataReader.setDetailApiCookie();
     	// 0. 카테고리 목록 가져오기
-    	List<String> getCategoryURLList = SinsangDataReader.getCategoryURLList();
+    	List<String> getCategoryURLList = SinsangDataReader.getCategoryURLList(gender, size);
     	// 1. 카테고리 Loop
     	for(String getCategoryURL : getCategoryURLList) {
         	// 2. 카테고리 별 리스트 API 호출
@@ -46,7 +51,7 @@ public class SinsangController {
     		
     		// 3. 카테고리 별 리스트 Loop
     		for( JsonElement sinsang : sinsangListData.getAsJsonObject().get("list").getAsJsonArray()) {
-    			Thread.sleep(500);
+    			Thread.sleep(1 * 1000);
     			JsonObject row = sinsang.getAsJsonObject();
     			
     			ProductDTO checkproduct = productMapper.findById(row.get("id").getAsInt());
@@ -94,6 +99,7 @@ public class SinsangController {
         		
         		// 5. 리턴된 상세 데이터 + 리스트의 콘텐츠 기본정보 + GID 로 상품정보 DB insert
         		productMapper.insert(productDTO);
+        		productCnt++;
         		
         		// 5.1. 이미지정보 loop
         		for( JsonElement image : detailRow.get("goodsImages").getAsJsonArray()) {
@@ -104,12 +110,10 @@ public class SinsangController {
         			
         			// 6. 상품 이미지 DB insert
         			productImageMapper.insert(productImageDTO);
+        			productImageCnt++;
         		}
     		}
-    			
-    		
     	}
-    	
-    	return null;
+    	return String.format("%s%s%s%s%s","상품 컨텐츠 : ", productCnt, " 건 / 상품 연관 이미지 컨텐츠 : ", productImageCnt, "건 정상 스크래핑 되었습니다.!!");
     }
 }
