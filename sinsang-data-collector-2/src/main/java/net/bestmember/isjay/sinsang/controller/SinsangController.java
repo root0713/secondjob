@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -115,5 +117,16 @@ public class SinsangController {
     		}
     	}
     	return String.format("%s%s%s%s%s","상품 컨텐츠 : ", productCnt, " 건 / 상품 연관 이미지 컨텐츠 : ", productImageCnt, "건 정상 스크래핑 되었습니다.!!");
+    }
+    
+    @GetMapping({"/contentsList"})
+    public String contentsList() throws Exception {
+    	List<ProductDTO> result = productMapper.findAll();
+    	
+    	Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    	JsonParser jp = new JsonParser();
+    	JsonElement je = jp.parse(new Gson().toJsonTree(result).toString());
+    	String prettyJsonString = gson.toJson(je);
+    	return prettyJsonString ;
     }
 }
