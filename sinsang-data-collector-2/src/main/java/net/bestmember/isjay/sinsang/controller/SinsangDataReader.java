@@ -37,10 +37,10 @@ public class SinsangDataReader {
 	static BasicCookieStore cookieStore = new BasicCookieStore();
 			
 	public static List<String> getCategoryURLList(){
-		return getCategoryURLList("", 0);
+		return getCategoryURLList("", 0, 5000, 10000);
 	}
 	
-	public static List<String> getCategoryURLList(String gender, int size){
+	public static List<String> getCategoryURLList(String gender, int size, int priceLow, int priceHigh){
 		/**
 		 * 1. 남성 티/탑 : 신상배송 / 댄디 / 대한민국 / 5000~10000
 		 * https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size=36&disableAds=1&enableSDelivery=1&catId=12&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow=5000&priceHigh=10000
@@ -57,19 +57,19 @@ public class SinsangDataReader {
 		List<String> categoryList = new ArrayList<String>();
 		if(DEFAULT_MEN_CATE_ID == catGenderId) {
 			if(size == 0) size = DEFAULT_MEN_CATE_SIZE;
-			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ size +"&disableAds=1&enableSDelivery=1&catId=12&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
-			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ size +"&disableAds=1&enableSDelivery=1&catId=13&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
-			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ size +"&disableAds=1&enableSDelivery=1&catId=16&catGenderId=2&catItemId=1&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
-			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ size +"&disableAds=1&enableSDelivery=1&catId=17&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
+			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ size +"&disableAds=1&enableSDelivery=1&catId=12&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow="+priceLow+"&priceHigh="+priceHigh);
+			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ size +"&disableAds=1&enableSDelivery=1&catId=13&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow="+priceLow+"&priceHigh="+priceHigh);
+			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ size +"&disableAds=1&enableSDelivery=1&catId=16&catGenderId=2&catItemId=1&manufacturingCountryId=1&priceLow="+priceLow+"&priceHigh="+priceHigh);
+			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ size +"&disableAds=1&enableSDelivery=1&catId=17&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow="+priceLow+"&priceHigh="+priceHigh);
 		}else if(DEFAULT_WOMEN_CATE_ID == catGenderId) {
 			if(size == 0) size = DEFAULT_WOMEN_CATE_SIZE;
-			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ size +"&disableAds=1&storeId=9164&catGenderId=1&catItemId=1&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
+			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ size +"&disableAds=1&storeId=9164&catGenderId=1&catItemId=1&manufacturingCountryId=1&priceLow="+priceLow+"&priceHigh="+priceHigh);
 		}else {
-			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ DEFAULT_MEN_CATE_SIZE +"&disableAds=1&enableSDelivery=1&catId=12&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
-			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ DEFAULT_MEN_CATE_SIZE +"&disableAds=1&enableSDelivery=1&catId=13&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
-			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ DEFAULT_MEN_CATE_SIZE +"&disableAds=1&enableSDelivery=1&catId=16&catGenderId=2&catItemId=1&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
-			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ DEFAULT_MEN_CATE_SIZE +"&disableAds=1&enableSDelivery=1&catId=17&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
-			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ DEFAULT_WOMEN_CATE_SIZE +"&disableAds=1&storeId=9164&catGenderId=1&catItemId=1&manufacturingCountryId=1&priceLow=5000&priceHigh=10000");
+			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ DEFAULT_MEN_CATE_SIZE +"&disableAds=1&enableSDelivery=1&catId=12&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow="+priceLow+"&priceHigh="+priceHigh);
+			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ DEFAULT_MEN_CATE_SIZE +"&disableAds=1&enableSDelivery=1&catId=13&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow="+priceLow+"&priceHigh="+priceHigh);
+			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ DEFAULT_MEN_CATE_SIZE +"&disableAds=1&enableSDelivery=1&catId=16&catGenderId=2&catItemId=1&manufacturingCountryId=1&priceLow="+priceLow+"&priceHigh="+priceHigh);
+			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ DEFAULT_MEN_CATE_SIZE +"&disableAds=1&enableSDelivery=1&catId=17&catGenderId=2&catItemId=1&styleId=13&manufacturingCountryId=1&priceLow="+priceLow+"&priceHigh="+priceHigh);
+			categoryList.add("https://search-api.sinsangmarket.co.kr/product/list/category?page=1&size="+ DEFAULT_WOMEN_CATE_SIZE +"&disableAds=1&storeId=9164&catGenderId=1&catItemId=1&manufacturingCountryId=1&priceLow="+priceLow+"&priceHigh="+priceHigh);
 		}
 		return categoryList; 
 	}

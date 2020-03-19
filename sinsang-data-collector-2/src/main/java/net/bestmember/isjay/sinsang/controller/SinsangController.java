@@ -33,8 +33,8 @@ public class SinsangController {
     @Autowired
     private ProductImageMapper productImageMapper;
 	
-    @GetMapping({"/collect", "/collect/{gender}/{size}"})
-    public String collect(@PathVariable(required = false) String gender, @PathVariable(required = false) Integer size) throws Exception {
+    @GetMapping({"/collect", "/collect/{gender}/{size}/{priceLow}/{priceHigh}"})
+    public String collect(@PathVariable(required = false) String gender, @PathVariable(required = false) Integer size, @PathVariable(required = false) Integer priceLow, @PathVariable(required = false) Integer priceHigh) throws Exception {
     	int productCnt = 0;
     	int productImageCnt = 0;
     	ProductDTO productDTO = new ProductDTO();
@@ -42,7 +42,7 @@ public class SinsangController {
 
     	SinsangDataReader.setDetailApiCookie();
     	// 0. 카테고리 목록 가져오기
-    	List<String> getCategoryURLList = SinsangDataReader.getCategoryURLList(gender, size);
+    	List<String> getCategoryURLList = SinsangDataReader.getCategoryURLList(gender, size, priceLow, priceHigh);
     	// 1. 카테고리 Loop
     	for(String getCategoryURL : getCategoryURLList) {
         	// 2. 카테고리 별 리스트 API 호출
