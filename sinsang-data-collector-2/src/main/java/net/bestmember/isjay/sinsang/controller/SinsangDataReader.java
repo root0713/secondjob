@@ -126,8 +126,10 @@ public class SinsangDataReader {
 		HttpClient.parseRawCookie("PHPSESSID=21698s6q00fvv36r9cnhgrbvb6;PHPSESSID=j8u793874c0m7lu84vnk2t9192;cd8562d226d37128b84a8bc1aad7ea3a=MjEwLjEwOC4xMzguMw%3D%3D;autoLogin=y;userid=bearbell;rsIdx=165465;memberPart=R;certStatus=Confirmed;userName=%EB%B0%B0%EC%A7%84%EC%84%B1;storeName=%EB%B2%A0%EC%96%B4%EB%B2%A8;oauth_token=F0884F0EB339E9A1EBE3D36C8D540B4A25E6CA4D329224485B3CF659D6F3DF39;cec01c36d54bc4dc676baa8b7bf8cfaa=c4408d355cbe21015b113a41975968bf;isAutoLogin=y;imgpopup=no;thisTimeSession=bd7c9c77de9af1563c5f84b818399bc2;wcs_bt=b2b2e49974a34:1582682569;", "/", ".www.sinsangmarket.kr", cookieStore);
 	}
 	
+	static final String DEFAULT_PATH = "/Users/sujin/Library/Mobile Documents/com~apple~CloudDocs/Documents/sinsang/scraping/collect/20.03.19/5000-9999/";
+	static final String DEFAULT_FILE_NAME = "_sinsang_korea.xlsx";
 	public static void readExcel() throws EncryptedDocumentException, InvalidFormatException, IOException {
-    	String SAMPLE_XLSX_FILE_PATH = "/Users/sujin/Downloads/sinsang_20200228/_sinsang_20200228_korea.xlsx";
+    	String SAMPLE_XLSX_FILE_PATH = DEFAULT_PATH + DEFAULT_FILE_NAME;
         // Creating a Workbook from an Excel file (.xls or .xlsx)
         Workbook workbook = WorkbookFactory.create(new File(SAMPLE_XLSX_FILE_PATH));
 
@@ -240,7 +242,7 @@ public class SinsangDataReader {
 					String ext = imgUrl.substring( imgUrl.lastIndexOf('.')+1, imgUrl.length() ).split("&")[0];  // 이미지 확장자 추출
 					fileName = gid + "-" + fileName.substring(0, fileName.indexOf("."));
 					BufferedImage img = ImageIO.read(url);
-					String targetDir = "/Users/sujin/Downloads/sinsang_20200228/"+bigCateName+"/"+detailCateName;
+					String targetDir = DEFAULT_PATH + bigCateName+"/"+detailCateName;
 					File checkDir = new File(targetDir);
 					if (!checkDir.exists()) {
 						try {
