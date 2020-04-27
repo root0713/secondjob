@@ -126,40 +126,8 @@ public class SinsangDataReader {
 		HttpClient.parseRawCookie("PHPSESSID=21698s6q00fvv36r9cnhgrbvb6;PHPSESSID=j8u793874c0m7lu84vnk2t9192;cd8562d226d37128b84a8bc1aad7ea3a=MjEwLjEwOC4xMzguMw%3D%3D;autoLogin=y;userid=bearbell;rsIdx=165465;memberPart=R;certStatus=Confirmed;userName=%EB%B0%B0%EC%A7%84%EC%84%B1;storeName=%EB%B2%A0%EC%96%B4%EB%B2%A8;oauth_token=F0884F0EB339E9A1EBE3D36C8D540B4A25E6CA4D329224485B3CF659D6F3DF39;cec01c36d54bc4dc676baa8b7bf8cfaa=c4408d355cbe21015b113a41975968bf;isAutoLogin=y;imgpopup=no;thisTimeSession=bd7c9c77de9af1563c5f84b818399bc2;wcs_bt=b2b2e49974a34:1582682569;", "/", ".www.sinsangmarket.kr", cookieStore);
 	}
 	
-//	static final String DEFAULT_PATH = "/Users/sujin/Library/Mobile Documents/com~apple~CloudDocs/Documents/sinsang/scraping/collect/20.03.19/5000-9999/";
-	static final String DEFAULT_PATH = "/Users/isjung/Library/Mobile Documents/com~apple~CloudDocs/Documents/sinsang/scraping/collect";
-	static final String[] DEFAULT_FILE_NAME = {
-			"/20.04.25/5000-9999/_sinsang_korea.xlsx"
-			, "/20.04.25/10000-19999/_sinsang_korea.xlsx"
-			, "/20.04.25/20000-29999/_sinsang_korea.xlsx"
-	};
-	
-	public static void imageDownloadByReadExcel() throws EncryptedDocumentException, InvalidFormatException, IOException {
-		imageDownloadByReadExcel(DEFAULT_PATH, DEFAULT_FILE_NAME);
-	}
-	
-	public static void imageDownloadByReadExcel(String filePath, String[] fileName) throws EncryptedDocumentException, InvalidFormatException, IOException {
-		for(String file : fileName) {
-			String XLSX_FILE_PATH = filePath + file;
-			// Creating a Workbook from an Excel file (.xls or .xlsx)
-			Workbook workbook = WorkbookFactory.create(new File(XLSX_FILE_PATH));
-			// Retrieving the number of sheets in the Workbook
-			System.out.println("Workbook has " + workbook.getNumberOfSheets() + " Sheets : ");
-			// Getting the Sheet at index zero
-			Sheet sheet = workbook.getSheetAt(0);
-			System.out.println("\\nfile name : "+XLSX_FILE_PATH+" job starting\n");
-			for (Row row: sheet) {
-				for(Cell cell: row) {
-					imageDownload(cell);
-				}
-				System.out.println();
-			}
-			workbook.close();
-			System.out.println("\\nfile name : "+XLSX_FILE_PATH+" job end\n");
-		}
-	}
-	
-	
+	static final String DEFAULT_PATH = "/Users/sujin/Library/Mobile Documents/com~apple~CloudDocs/Documents/sinsang/scraping/collect/20.03.19/5000-9999/";
+	static final String DEFAULT_FILE_NAME = "_sinsang_korea.xlsx";
 	public static void readExcel() throws EncryptedDocumentException, InvalidFormatException, IOException {
     	String SAMPLE_XLSX_FILE_PATH = DEFAULT_PATH + DEFAULT_FILE_NAME;
         // Creating a Workbook from an Excel file (.xls or .xlsx)
@@ -251,7 +219,6 @@ public class SinsangDataReader {
 	}
 	
 	static int gid = 0;
-	static int price = 0;
 	static String bigCateName = "";
 	static String detailCateName = "";
 	
@@ -260,8 +227,6 @@ public class SinsangDataReader {
 //    	System.out.println("cell.getRowIndex()  : " + cell.getRowIndex() );
     	if(cell.getColumnIndex() == 0 && cell.getRowIndex() > 0)
     		gid = (int) Math.round(cell.getNumericCellValue());
-    	if(cell.getColumnIndex() == 4 && cell.getRowIndex() > 0)
-    		price = (int) cell.getNumericCellValue();
     	if(cell.getColumnIndex() == 2 && cell.getRowIndex() > 0) 
     		bigCateName = cell.getStringCellValue().replace("/", "&");
     	if(cell.getColumnIndex() == 3) 
@@ -275,7 +240,7 @@ public class SinsangDataReader {
 					url = new URL(imgUrl);
 					String fileName = imgUrl.substring( imgUrl.lastIndexOf('/')+1, imgUrl.length() ); // 이미지 파일명 추출
 					String ext = imgUrl.substring( imgUrl.lastIndexOf('.')+1, imgUrl.length() ).split("&")[0];  // 이미지 확장자 추출
-					fileName = gid + "-" + price + "-" + fileName.substring(0, fileName.indexOf("."));
+					fileName = gid + "-" + fileName.substring(0, fileName.indexOf("."));
 					BufferedImage img = ImageIO.read(url);
 					String targetDir = DEFAULT_PATH + bigCateName+"/"+detailCateName;
 					File checkDir = new File(targetDir);
