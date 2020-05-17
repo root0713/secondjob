@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.apache.tomcat.util.json.JSONParser;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,8 @@ import net.bestmember.isjay.sinsang.mapper.ProductMapper;
 @RestController
 public class SinsangController {
 	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
     @Autowired
     private ProductMapper productMapper;
     
@@ -37,6 +41,7 @@ public class SinsangController {
     public String collect(@PathVariable(required = false) String gender, @PathVariable(required = false) Integer size, @PathVariable(required = false) Integer priceLow, @PathVariable(required = false) Integer priceHigh) throws Exception {
     	int productCnt = 0;
     	int productImageCnt = 0;
+    	int maxImageContentCnt = 10;
     	ProductDTO productDTO = new ProductDTO();
     	ProductImageDTO productImageDTO = new ProductImageDTO();
 
@@ -51,14 +56,25 @@ public class SinsangController {
     		JsonElement sinsangList = JsonParser.parseString(getSinsangList);
     		JsonElement sinsangListData = sinsangList.getAsJsonObject().get("data");
     		
+    		int checkCnt = 0;
+    		
     		// 3. 카테고리 별 리스트 Loop
     		for( JsonElement sinsang : sinsangListData.getAsJsonObject().get("list").getAsJsonArray()) {
-    			Thread.sleep(1 * 1000);
+    			Thread.sleep(1 * 100);
     			JsonObject row = sinsang.getAsJsonObject();
     			
     			ProductDTO checkproduct = productMapper.findById(row.get("id").getAsInt());
     			
+        		logger.debug("productCnt : " + productCnt + " : " + productDTO.getGid() + " : started...");
+    			
+    			// 5번 이상 컨텐츠가 존재하는 경우는 out loop
+    			if(checkCnt >= 5) {
+    				break;
+    			}
+    			
+    			// 같은 컨텐츠가 있는 경우는 next loop
     			if(checkproduct != null) {
+    				checkCnt++;
     				continue;
     			}
     			
@@ -103,8 +119,14 @@ public class SinsangController {
         		productMapper.insert(productDTO);
         		productCnt++;
         		
+        		int imageContentCnt = 0;
         		// 5.1. 이미지정보 loop
         		for( JsonElement image : detailRow.get("goodsImages").getAsJsonArray()) {
+        			if(imageContentCnt >= maxImageContentCnt) {
+        				break;
+        			}
+        			imageContentCnt++;
+        			
         			JsonObject imageRow = image.getAsJsonObject();
         			productImageDTO.setGid(productDTO.getGid());
         			productImageDTO.setImageUrl(imageRow.get("imageUrl").getAsString());
