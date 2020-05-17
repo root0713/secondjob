@@ -1,4 +1,4 @@
-package net.bestmember.isjay.sinsang.controller;
+package net.bestmember.isjay.sinsang.service;
 
 import java.util.List;
 import java.util.Map;

@@ -1,5 +1,6 @@
 package net.bestmember.isjay.sinsang;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import net.bestmember.isjay.sinsang.mapper.ProductMapper;
 
 @SpringBootApplication
 @EnableScheduling
+@MapperScan(basePackages = "net.bestmember.isjay.sinsang.mapper")
 public class SinsangDataCollector2Application {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     

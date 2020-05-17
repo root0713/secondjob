@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper	namespace="net.bestmember.isjay.sinsang.mapper.ProductMapper">
+
+	<select id="findAll" parameterType="hashMap" resultType="ProductDTO">
+		select
+			gid,title,storeId,styleId,likes
+			,price,catId,catGenderId,catItemId,bigCategoryName
+			,detailCategoryName,tel,color,size,mixtureRate
+			,madeInCountry,cannotBuySingle,createDate,updateDate
+		from product
+	</select>
+
+	<select id="findById" resultType="ProductDTO">
+		SELECT *
+		FROM product
+		WHERE gid = #{id}
+	</select>
+	
+	<select id="contentsList" parameterType="hashMap" resultType="java.util.LinkedHashMap">
+		<![CDATA[
+		select
+			gid
+			, title
+			, bigCategoryName
+			, detailCategoryName
+			, price
+			, color
+			, `size`
+			, mixtureRate
+			, madeInCountry
+			, GROUP_CONCAT(if(rnum = 1, refilename, NULL)) AS 'imgfile1'
+			, GROUP_CONCAT(if(rnum = 3, refilename, NULL)) AS 'imgfile2'
+			, GROUP_CONCAT(if(rnum = 4, refilename, NULL)) AS 'imgfile3'
+			, GROUP_CONCAT(if(rnum = 5, refilename, NULL)) AS 'imgfile4'
+			, GROUP_CONCAT(if(rnum = 6, refilename, NULL)) AS 'imgfile5'
+		 	, GROUP_CONCAT(if(rnum = 1, imgurls , NULL)) AS 'imgurl1'
+			, GROUP_CONCAT(if(rnum = 3, imgurls, NULL)) AS 'imgurl2'
+			, GROUP_CONCAT(if(rnum = 4, imgurls, NULL)) AS 'imgurl3'
+			, GROUP_CONCAT(if(rnum = 5, imgurls, NULL)) AS 'imgurl4'
+			, GROUP_CONCAT(if(rnum = 6, imgurls, NULL)) AS 'imgurl5'
+		from 
+		(
+			SELECT a.*
+				, CONCAT((select SUBSTRING(UPPER(catNmEn),1,2) from category cate where cate.catId = prod.catId and cate.upperCatId = prod.catGenderId ) ,'-',prod.gid,'-',prod.price,'-',a.filename) refilename 
+				, prod.title
+				, (select catNmEn from category cate where cate.catId = prod.catGenderId and cate.upperCatId = 0 ) as bigCategoryName
+				, (select catNmEn from category cate where cate.catId = prod.catId and cate.upperCatId = prod.catGenderId ) as detailCategoryName
+				, prod.price
+				, prod.color
+				, prod.`size`
+				, prod.mixtureRate
+				, prod.madeInCountry
+				, CONCAT('https://image-cache.sinsang.market/?f=',a.imageUrl, a.filename,'&h=907&w=690') imgurls
+			    , (CASE @vOccup WHEN a.gid THEN @rownum:=@rownum+1 ELSE @rownum:=1 END) rnum
+			    , (@vOccup:=a.gid) vOccup
+			FROM product_image a,product prod,(SELECT @vOccup:='', @rownum:=0 FROM DUAL) b
+			where 
+				a.gid = prod.gid 
+				and prod.createDate >= str_to_date(#{minDate}, '%Y-%m-%d') 
+		) as prod_img
+		group by
+			gid
+			, title
+			, bigCategoryName
+			, detailCategoryName
+			, price
+			, color
+			, `size`
+			, mixtureRate
+			, madeInCountry
+		order by prod_img.bigCategoryName, prod_img.detailCategoryName
+		]]>
+	</select>	
+
+	<delete id="deleteById">
+		DELETE FROM product WHERE gid = #{id}
+	</delete>
+
+	<insert id="insert" parameterType="productDTO">
+		INSERT INTO product (gid,title,storeId,styleId,likes,price,catId,catGenderId,catItemId,bigCategoryName,detailCategoryName,tel,color,size,mixtureRate,intro,madeInCountry,cannotBuySingle)
+		VALUES(#{gid},#{title},#{storeId},#{styleId},#{likes},#{price},#{catId},#{catGenderId},#{catItemId},#{bigCategoryName},#{detailCategoryName},#{tel},#{color},#{size},#{mixtureRate},#{intro},#{madeInCountry},#{cannotBuySingle})
+	</insert>
+
+</mapper>

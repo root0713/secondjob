@@ -7,23 +7,19 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.stereotype.Repository;
 
 import net.bestmember.isjay.sinsang.dto.ProductDTO;
 import net.bestmember.isjay.sinsang.dto.ProductImageDTO;
 
+@Repository
 @Mapper
 public interface ProductImageMapper {
-    @Select("select * from product_image WHERE gid = #{gid}")
-    public List < ProductImageDTO > findImagesByGid(int gid);
+    public List < ProductImageDTO > findImagesByGid(int gid) throws Exception;
 
-    @Delete("DELETE FROM product_image WHERE gid = #{gid}")
-    public int deleteImagesByGid(int gid);
+    public int deleteImagesByGid(int gid) throws Exception;
 
-    @Insert("INSERT INTO product_image (gid,imageUrl,filename) VALUES (#{gid},#{imageUrl},#{filename})")
-    public int insert(ProductImageDTO productImageDTO);
+    public int insert(ProductImageDTO productImageDTO) throws Exception;
 
-    @Update("Update employees set first_name=#{firstName}, " +
-        " last_name=#{lastName}, email_address=#{emailId} where id=#{id}")
-    public int update(ProductDTO productDTO);
 }
 

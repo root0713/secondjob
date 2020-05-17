@@ -1,4 +1,4 @@
-package net.bestmember.isjay.sinsang.controller;
+package net.bestmember.isjay.sinsang.service;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -22,11 +22,13 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.json.JSONObject;
+import org.springframework.stereotype.Service;
 
 import net.bestmember.isjay.common.util.HttpClient;
 import net.bestmember.isjay.common.util.StringUtils;
 import net.bestmember.isjay.common.vo.CodeResult;
 
+@Service
 public class SinsangDataReader {
 	
 	static final int DEFAULT_MEN_CATE_ID = 1;

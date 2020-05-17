@@ -1,5 +1,6 @@
 package net.bestmember.isjay.sinsang.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
@@ -7,26 +8,21 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.stereotype.Repository;
 
 import net.bestmember.isjay.sinsang.dto.ProductDTO;
 
+@Repository
 @Mapper
 public interface ProductMapper {
-//    @Select("select gid,title,storeId,styleId,likes,price,catId,catGenderId,catItemId,bigCategoryName,detailCategoryName,tel,color,size,mixtureRate,madeInCountry,cannotBuySingle,createDate,updateDate from product")
-	@Select("select gid,title,storeId,styleId,likes,price,catId,catGenderId,catItemId,bigCategoryName,detailCategoryName,tel,color,size,mixtureRate,madeInCountry,cannotBuySingle,createDate,updateDate from product")
-    public List<ProductDTO> findAll();
+    public List<ProductDTO> findAll() throws Exception;
 
-    @Select("SELECT * FROM product WHERE gid = #{id}")
-    public ProductDTO findById(int gid);
+    public ProductDTO findById(int gid) throws Exception;
+    
+    public List<HashMap<String,Object>> contentsList(HashMap<String,Object> param) throws Exception;
 
-    @Delete("DELETE FROM product WHERE gid = #{id}")
-    public int deleteById(int gid);
+    public int deleteById(int gid) throws Exception;
 
-    @Insert("INSERT INTO product (gid,title,storeId,styleId,likes ,price,catId,catGenderId,catItemId,bigCategoryName,detailCategoryName,tel,color,size,mixtureRate ,intro,madeInCountry,cannotBuySingle)" +
-        " VALUES (#{gid},#{title},#{storeId},#{styleId},#{likes},#{price},#{catId},#{catGenderId},#{catItemId},#{bigCategoryName},#{detailCategoryName},#{tel},#{color},#{size},#{mixtureRate},#{intro},#{madeInCountry},#{cannotBuySingle})")
-    public int insert(ProductDTO productDTO);
+    public int insert(ProductDTO productDTO) throws Exception;
 
-    @Update("Update employees set first_name=#{firstName}, " +
-        " last_name=#{lastName}, email_address=#{emailId} where id=#{id}")
-    public int update(ProductDTO productDTO);
 }
