@@ -13,8 +13,8 @@ import net.bestmember.isjay.common.util.HttpClient;
 @Component
 public class Scheduler {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	
-	@Scheduled(cron = "0 0 1 * * *")
+	// 초 분 시 일 월 주(년)
+	@Scheduled(cron = "0 0 1 * * ?")
 	public void cronJobSch() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		Date now = new Date();

@@ -1,5 +1,7 @@
 package net.bestmember.isjay.sinsang.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,9 +52,13 @@ public class SinsangController {
     
     @GetMapping({"/downloadCSV"})
     public void downloadCSV(@RequestParam HashMap<String, Object> params, HttpServletResponse response) throws Exception {
-    	
+    	if(params.get("minDate") == null) {
+    		Date date = new Date(); 
+    		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    		params.put("minDate", formatter.format(date));
+    	}
         //set file name and content type
-        String filename = String.format("%s_%s.csv", "sinsang", params.get("minDate"));
+        String filename = String.format("%s_%s.csv", "sinsang", params.get("minDate") == null ? "" : params.get("minDate"));
 
         response.setContentType("text/csv");
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
@@ -61,4 +67,8 @@ public class SinsangController {
         response.setCharacterEncoding("EUC-KR");
         CSVUtils.csvWriter(sinsangService.contentsList(params), response.getWriter());
     }
+    
+    // csv 파일 업로드
+    
+    // 
 }
