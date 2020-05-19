@@ -1,0 +1,42 @@
+2020-05-18 18:51:53.843  INFO 66864 --- [main] n.b.i.s.SinsangDataCollector2Application : Starting SinsangDataCollector2Application on ML-IMAC-isjung.local with PID 66864 (/Users/sujin/git/secondjob/sinsang-data-collector-2/target/classes started by sujin in /Users/sujin/git/secondjob/sinsang-data-collector-2)
+2020-05-18 18:51:53.848 DEBUG 66864 --- [main] n.b.i.s.SinsangDataCollector2Application : Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-05-18 18:51:53.849  INFO 66864 --- [main] n.b.i.s.SinsangDataCollector2Application : No active profile set, falling back to default profiles: default
+2020-05-18 18:51:54.605  INFO 66864 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-05-18 18:51:54.612  INFO 66864 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-05-18 18:51:54.612  INFO 66864 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.30]
+2020-05-18 18:51:54.669  INFO 66864 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-05-18 18:51:54.669  INFO 66864 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 762 ms
+2020-05-18 18:51:55.029  INFO 66864 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-05-18 18:51:55.222  INFO 66864 --- [main] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'taskScheduler'
+2020-05-18 18:51:55.263  INFO 66864 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2020-05-18 18:51:55.267  INFO 66864 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2020-05-18 18:51:55.270 ERROR 66864 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2020-05-18 18:51:55.271  INFO 66864 --- [main] o.s.s.c.ThreadPoolTaskScheduler          : Shutting down ExecutorService 'taskScheduler'
+2020-05-18 18:51:55.272  INFO 66864 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2020-05-18 18:52:16.512  INFO 66875 --- [main] n.b.i.s.SinsangDataCollector2Application : Starting SinsangDataCollector2Application on ML-IMAC-isjung.local with PID 66875 (/Users/sujin/git/secondjob/sinsang-data-collector-2/target/classes started by sujin in /Users/sujin/git/secondjob/sinsang-data-collector-2)
+2020-05-18 18:52:16.517 DEBUG 66875 --- [main] n.b.i.s.SinsangDataCollector2Application : Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-05-18 18:52:16.518  INFO 66875 --- [main] n.b.i.s.SinsangDataCollector2Application : No active profile set, falling back to default profiles: default
+2020-05-18 18:52:17.345  INFO 66875 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-05-18 18:52:17.352  INFO 66875 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-05-18 18:52:17.352  INFO 66875 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.30]
+2020-05-18 18:52:17.404  INFO 66875 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-05-18 18:52:17.404  INFO 66875 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 847 ms
+2020-05-18 18:52:17.840  INFO 66875 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-05-18 18:52:18.072  INFO 66875 --- [main] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'taskScheduler'
+2020-05-18 18:52:18.138  INFO 66875 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2020-05-18 18:52:18.143  INFO 66875 --- [main] n.b.i.s.SinsangDataCollector2Application : Started SinsangDataCollector2Application in 1.925 seconds (JVM running for 2.924)
