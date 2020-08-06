@@ -129,9 +129,9 @@ public class SinsangDataReader {
 	}
 	
 //	static final String DEFAULT_PATH = "/Users/sujin/Library/Mobile Documents/com~apple~CloudDocs/Documents/sinsang/scraping/collect/20.03.19/5000-9999/";
-	static final String DEFAULT_PATH = "/Users/isjung/Library/Mobile Documents/com~apple~CloudDocs/Documents/sinsang/scraping/collect/";
+	static final String DEFAULT_PATH = "/Users/sujin/Library/Mobile Documents/com~apple~CloudDocs/Documents/sinsang/scraping/collect/";
 	static final String[] DEFAULT_FILE_NAME = {
-			"20.05.17/_sinsang_korea.xlsx"
+			"20.06.11/_sinsang_korea.xlsx"
 	};
 	
 	public static void imageDownloadByReadExcel() throws EncryptedDocumentException, InvalidFormatException, IOException {
