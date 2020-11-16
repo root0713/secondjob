@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Popup</title>
+        <link href="css/styles.css" rel="stylesheet" />
+        <link href="css/bootstrap-datepicker3.min.css" rel="stylesheet" />
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="js/bootstrap-datepicker.min.js"></script>
+        <script src="js/bootstrap-datepicker.kr.js" charset="UTF-8"></script>
+        <script src="js/bootstrap-4-autocomplete.min.js"></script>    
+        <script src="js/scripts.js"></script>
+        <script src="assets/demo/location.js"></script>
+    </head>
+    <body class="sb-nav-fixed">
+        <div id="layoutSidenav_content">
+            <div class="container-fluid">
+                <h3 class="mt-4">MACTI REPORT</h3>
+            </div>
+            <div class="container-fluid">
+                <h5 class="mt-4">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#dayily">일별 작업일지</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#monthly">월간 작업통계</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#setting">설정</a>
+                        </li>
+                    </ul>
+                </h5>
+            </div>            
+            <main>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="dayily">
+                        <div class="container-fluid">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <form class="form-inline">
+                                        <div class="form-group mx-sm-3 mb-2">
+                                            <input class="form-control datepicker" id="searchDate" placeholder="날짜(일)" readonly>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mb-2">확인</button>
+                                    </form>
+                                </div>
+                                <!--<div class="card-body">111</div>-->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="monthly">
+                        <div class="container-fluid">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <form class="form-inline">
+                                        <div class="form-group mx-sm-3 mb-2">
+                                            <input class="form-control datepicker-month" id="searchMonth" placeholder="날짜(월)" readonly>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mb-2">확인</button>
+                                    </form>
+                                </div>
+                                <!--<div class="card-body">111</div>-->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="setting">
+                        <div class="container-fluid">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="form-group mx-sm-3 mb-2">
+                                        <input class="form-control" id="searchLocation" placeholder="지역설정(선택하세요)">
+                                        <div id="output"></div>                                  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                     
+            </main>
+        </div>
+    </body>
+</html>
+<script>
+$(document).ready(function(){
+    Date.prototype.yyyymmdd = function() {
+        var mm = this.getMonth() + 1; // getMonth() is zero-based
+        var dd = this.getDate();
+
+        return [this.getFullYear(),
+                (mm>9 ? '' : '0') + mm,
+                (dd>9 ? '' : '0') + dd
+                ].join('-');
+    };
+
+    Date.prototype.yyyymm = function() {
+        var mm = this.getMonth(); // getMonth() is zero-based
+        return [this.getFullYear(),
+                (mm>9 ? '' : '0') + mm
+                ].join('-');
+    };    
+    var date = new Date();
+    $('#searchDate').val(date.yyyymmdd());
+    $('#searchMonth').val(date.yyyymm());
+
+    $('.datepicker').datepicker({
+        calendarWeeks: false,
+        todayHighlight: true,
+        autoclose: true,
+        format: "yyyy-mm-dd",
+        todayBtn: true,
+        clearBtn: true,
+        language: "kr"
+    });
+
+    $('.datepicker-month').datepicker({
+        startView: 1,
+        minViewMode: 1,        
+        calendarWeeks: false,
+        todayHighlight: true,
+        autoclose: true,
+        format: "yyyy-mm",
+        language: "kr"
+    });
+
+    function onSelectItem(item, element) {
+        var arr = item.value.split(",");
+        $('#output').html(
+            '<b>지점:</b> ' + arr[0] + ' - <b>관리부서:</b> ' + arr[1]
+        );
+    }
+
+    $('#searchLocation').autocomplete({
+        source: locations,
+        treshold: 1,
+        onSelectItem: onSelectItem,
+        highlightClass: 'text-danger'
+    });
+
+});
+
+</script>

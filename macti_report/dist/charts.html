@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Charts</title>
+        <link href="css/styles.css" rel="stylesheet" />
+        <script src="js/all.min.js"></script>
+    </head>
+    <body class="sb-nav-fixed">
+        <div id="layoutSidenav_content">
+            <div class="container-fluid">
+                <h5 class="mt-4">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tempo" onclick="loadTempData();">온도,습도</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#group1" onclick="loadGroup1Data();">그룹1</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#group2" onclick="loadGroup2Data();">그룹2</a>
+                        </li>
+                    </ul>
+                </h5>
+            </div>            
+            <main>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="tempo">
+                        <div class="container-fluid">
+                            <div class="card mb-4">
+                                <div class="card-body"><canvas id="ctx_tempo_1" width="100%" height="30"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="group1">
+                        <div class="container-fluid">
+                            <div class="card mb-4">
+                                <div class="card-body"><canvas id="ctx_group1_2" width="100%" height="30"></canvas></div>
+                            </div>
+                        </div>
+
+                        <div class="container-fluid">
+                            <div class="card mb-4">
+                                <div class="card-body"><canvas id="ctx_group1_3" width="100%" height="30"></canvas></div>
+                            </div>
+                        </div>
+
+                        <div class="container-fluid">
+                            <div class="card mb-4">
+                                <div class="card-body"><canvas id="ctx_group1_4" width="100%" height="30"></canvas></div>
+                            </div>
+                        </div> 
+                    </div>
+
+                    <div class="tab-pane fade" id="group2">
+                        <div class="container-fluid">
+                            <div class="card mb-4">
+                                <div class="card-body"><canvas id="ctx_group2_5" width="100%" height="30"></canvas></div>
+                            </div>
+                        </div>
+
+                        <div class="container-fluid">
+                            <div class="card mb-4">
+                                <div class="card-body"><canvas id="ctx_group2_6" width="100%" height="30"></canvas></div>
+                            </div>
+                        </div>
+
+                        <div class="container-fluid">
+                            <div class="card mb-4">
+                                <div class="card-body"><canvas id="ctx_group2_7" width="100%" height="30"></canvas></div>
+                            </div>
+                        </div> 
+                    </div>
+                </div>                     
+            </main>
+        </div>
+        <script>
+            const colors = ['red','green','blue','orange','purple','grey'];
+        </script>
+        <script src="js/jquery-3.5.1.slim.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="js/scripts.js"></script>
+        <script src="js/Chart.min.js"></script>
+        <script src="assets/demo/chart-line-tempo.js"></script>
+        <script src="assets/demo/chart-line-group1.js"></script>
+        <script src="assets/demo/chart-line-group2.js"></script>
+        <script src="assets/demo/chart-line.js"></script>
+        
+    </body>
+</html>
